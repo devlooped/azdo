@@ -1,0 +1,38 @@
+{
+  "manifest_version": 2,
+  "name": "AzDO Linkinator",
+  "author": "Daniel Cazzulino",
+  "version": "0.5.0",
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },  
+  "content_scripts": [
+    {
+      "matches": ["https://devdiv.visualstudio.com/*"],
+      "js": ["jquery-3.2.1.min.js"]
+    },
+    {
+      "matches": ["https://dev.azure.com/*"],
+      "js": ["jquery-3.2.1.min.js"]
+    },
+    {
+      "matches": ["https://developercommunity.visualstudio.com/content/problem/*"],
+      "js": ["jquery-3.2.1.min.js"]
+    }
+  ],  
+  "page_action": {
+    "default_icon": {                    
+      "16": "images/DevDiv16.png",
+      "24": "images/DevDiv24.png",
+      "32": "images/DevDiv32.png",
+      "64": "images/DevDiv64.png"
+    },
+    "default_title": "Create a nice short AzDO link and copy to clipboard!"
+  },
+  "permissions": [
+    "tabs",
+    "declarativeContent",
+    "activeTab"
+  ]
+}
