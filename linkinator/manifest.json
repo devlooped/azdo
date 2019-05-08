@@ -23,10 +23,10 @@
   ],  
   "page_action": {
     "default_icon": {                    
-      "16": "images/DevDiv16.png",
-      "24": "images/DevDiv24.png",
-      "32": "images/DevDiv32.png",
-      "64": "images/DevDiv64.png"
+      "16": "images/AzDO16.png",
+      "24": "images/AzDO24.png",
+      "32": "images/AzDO32.png",
+      "64": "images/AzDO64.png"
     },
     "default_title": "Create a nice short AzDO link and copy to clipboard!"
   },
