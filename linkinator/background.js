@@ -14,9 +14,12 @@ function onClicked(tab) {
   var shortUrl = parser.pathname.substring(1) + parser.search;
 
   console.info('Processing ' + shortUrl);
-  shortUrl = shortenUrl(parser.hostname, shortUrl);
+  var newUrl = shortenUrl(parser.hostname, shortUrl);
+  // If no replacement was made, copy again the original url.
+  if (newUrl.skipped)
+    newUrl = tab.url;
 
-  copy(shortUrl);
+  copy(newUrl);
 
   chrome.tabs.executeScript(tab.id, {
       "code": "if (window.jQuery) { $('.workitem-dialog a.caption').attr('href'); } else { '' }"
@@ -139,12 +142,12 @@ function shortenUrl(hostname, shortUrl) {
       return 'http://pr.devdiv.io/' + match[1] + '/' + match[2];
   }
 
-  if (shortUrl.includes('/content/problem/')) {
+  if (shortUrl.includes('content/problem/')) {
     var problemId = /problem\/(\d+)\//.exec(shortUrl);
     return 'http://feedback.devdiv.io/' + problemId[1];
   }
   
-  return shortUrl;
+  return { skipped: true };
 }
 
 chrome.pageAction.onClicked.addListener(onClicked);
