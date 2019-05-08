@@ -49,8 +49,30 @@ public static IActionResult Run(HttpRequest req, ILogger log, string org = null,
         org = project = "DevDiv";
 
     if (string.IsNullOrEmpty(org) || string.IsNullOrEmpty(project))
+    {
+        new TelemetryClient(TelemetryConfiguration.Active).TrackEvent(
+            "docs", new Dictionary<string, string>
+            {
+                { "url", req.Host + req.Path + req.QueryString },
+                { "redirect", "https://github.com/kzu/azdo#wiki" },
+                { "org", org },
+                { "project", project },
+            });
+
         return new RedirectResult("https://github.com/kzu/azdo#wiki");
+    }
 
     var path = req.Path.Value.Replace($"/{org}/{project}", "/");
-    return new RedirectResult($"https://dev.azure.com/{org}/{project}/_wiki/wikis/{project}.wiki?pagePath={path}{req.QueryString}");
+    var location = $"https://dev.azure.com/{org}/{project}/_wiki/wikis/{project}.wiki?pagePath={path}{req.QueryString}";
+
+    new TelemetryClient(TelemetryConfiguration.Active).TrackEvent(
+        "redirect", new Dictionary<string, string>
+        {
+            { "url", req.Host + req.Path + req.QueryString },
+            { "redirect", location },
+            { "org", org },
+            { "project", project },
+        });
+
+    return new RedirectResult(location);
 }

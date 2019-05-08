@@ -82,6 +82,16 @@ public static IActionResult Run(HttpRequest req, ILogger log, string org = null,
     // format) or from the project, and default the project to == org further down (or both to DevDiv)
     if (id == null && !(double.TryParse(org, out parsed) || double.TryParse(project, out parsed)))
     {
+        new TelemetryClient(TelemetryConfiguration.Active).TrackEvent(
+            "docs", new Dictionary<string, string>
+            {
+                { "url", req.Host + req.Path + req.QueryString },
+                { "redirect", "https://github.com/kzu/azdo#builds" },
+                { "org", org },
+                { "project", project },
+                { "id", id?.ToString() },
+            });
+
         return new RedirectResult("https://github.com/kzu/azdo#builds");
     }
 
@@ -121,8 +131,19 @@ public static IActionResult Run(HttpRequest req, ILogger log, string org = null,
         }
     }
 
-    if (def)
-        return new RedirectResult($"https://dev.azure.com/{org}/{project}/_build/index?definitionId={parsed}");
-    else
-        return new RedirectResult($"https://dev.azure.com/{org}/{project}/_build/index?buildId={parsed}");
+    var location = def 
+        ? $"https://dev.azure.com/{org}/{project}/_build/index?definitionId={parsed}" 
+        : $"https://dev.azure.com/{org}/{project}/_build/index?buildId={parsed}";
+
+    new TelemetryClient(TelemetryConfiguration.Active).TrackEvent(
+        "redirect", new Dictionary<string, string>
+        {
+            { "url", req.Host + req.Path + req.QueryString },
+            { "redirect", location },
+            { "org", org },
+            { "project", project },
+            { "id", parsed.ToString() },
+        });
+
+    return new RedirectResult(location);
 }

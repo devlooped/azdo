@@ -1,8 +1,11 @@
 <Query Kind="Program">
+  <NuGetReference>Microsoft.ApplicationInsights</NuGetReference>
   <NuGetReference>Microsoft.AspNetCore.Mvc</NuGetReference>
   <NuGetReference>Microsoft.Extensions.Logging.Console</NuGetReference>
   <NuGetReference>Microsoft.Extensions.Logging.Debug</NuGetReference>
   <NuGetReference>xunit.assert</NuGetReference>
+  <Namespace>Microsoft.ApplicationInsights</Namespace>
+  <Namespace>Microsoft.ApplicationInsights.Extensibility</Namespace>
   <Namespace>Microsoft.AspNetCore.Http</Namespace>
   <Namespace>Microsoft.AspNetCore.Http.Internal</Namespace>
   <Namespace>Microsoft.AspNetCore.Mvc</Namespace>
@@ -74,6 +77,16 @@ public static IActionResult Run(HttpRequest req, ILogger log, string org = null,
     // format) or from the project, and default the project to == org further down (or both to DevDiv)
     if (id == null && !(double.TryParse(org, out parsed) || double.TryParse(project, out parsed)))
     {
+        new TelemetryClient(TelemetryConfiguration.Active).TrackEvent(
+            "docs", new Dictionary<string, string>
+            {
+                { "url", req.Host + req.Path + req.QueryString },
+                { "redirect", "https://github.com/kzu/azdo#releases" },
+                { "org", org },
+                { "project", project },
+                { "id", id?.ToString() },
+            });
+
         return new RedirectResult("https://github.com/kzu/azdo#releases");
     }
 
@@ -114,8 +127,19 @@ public static IActionResult Run(HttpRequest req, ILogger log, string org = null,
         }
     }
 
-    if (def)
-        return new RedirectResult($"https://dev.azure.com/{org}/{project}/_release?definitionId={parsed}");
-    else
-        return new RedirectResult($"https://dev.azure.com/{org}/{project}/_releaseProgress?releaseId={parsed}&_a=release-pipeline-progress");
+    var location = def
+        ? $"https://dev.azure.com/{org}/{project}/_release?definitionId={parsed}"
+        : $"https://dev.azure.com/{org}/{project}/_releaseProgress?releaseId={parsed}&_a=release-pipeline-progress";
+
+    new TelemetryClient(TelemetryConfiguration.Active).TrackEvent(
+        "redirect", new Dictionary<string, string>
+        {
+            { "url", req.Host + req.Path + req.QueryString },
+            { "redirect", location },
+            { "org", org },
+            { "project", project },
+            { "id", parsed.ToString() },
+        });
+
+    return new RedirectResult(location);
 }
