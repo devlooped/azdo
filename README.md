@@ -18,13 +18,15 @@ The latter is a must since even the most beautiful URIs are annoying to type by 
 
 The following are the supported URL shortening schemes:
 
-## Releases
-
-`http://releases.azdo.io/{org}/{project}/{id}`
+> NOTE: in all cases, if `org` == `project`, the latter can be omitted.
 
 ## Builds
 
 `http://build.azdo.io/{org}/{project}/{id}`
+
+## Releases
+
+`http://releases.azdo.io/{org}/{project}/{id}`
 
 ## Work Items
 
@@ -33,3 +35,7 @@ The following are the supported URL shortening schemes:
 ## Wiki
 
 `http://wiki.azdo.io/{org}/{project}/{path}`
+
+## Task Groups
+
+`http://tasks.azdo.io/{org}/{project}`
