@@ -108,7 +108,7 @@ public static IActionResult Run(HttpRequest req, ILogger log, string org = null,
     // We know DevDiv to be huge and have over a thousand RD with over 300k releases
     if (!def)
     {
-        if (project.Equals("devdiv", StringComparison.OrdinalIgnoreCase) && parsed < 1000000)
+        if (org.Equals("devdiv", StringComparison.OrdinalIgnoreCase) && project.Equals("devdiv", StringComparison.OrdinalIgnoreCase) && parsed < 1000000)
         {
             def = true;
         } 

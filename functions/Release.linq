@@ -32,9 +32,9 @@ void Main()
     Assert.IsType<RedirectResult>(Run("kzu", "1"));
 
     // Low id defaults to definition
-    Assert.StartsWith("https://dev.azure.com/kzu/oss/_releaseDefinition?definitionId=1", Run<RedirectResult>("kzu", "oss", 1).Url);
+    Assert.StartsWith("https://dev.azure.com/kzu/oss/_release?definitionId=1", Run<RedirectResult>("kzu", "oss", 1).Url);
     // High id explicitly opted in to definition
-    Assert.StartsWith("https://dev.azure.com/kzu/oss/_releaseDefinition?definitionId=100", Run<RedirectResult>("kzu", "oss", 100, "d").Url);
+    Assert.StartsWith("https://dev.azure.com/kzu/oss/_release?definitionId=100", Run<RedirectResult>("kzu", "oss", 100, "d").Url);
 
     // High id defaulted to release
     Assert.StartsWith("https://dev.azure.com/kzu/oss/_releaseProgress?releaseId=100", Run<RedirectResult>("kzu", "oss", 100).Url);
@@ -42,9 +42,9 @@ void Main()
     Assert.StartsWith("https://dev.azure.com/kzu/oss/_releaseProgress?releaseId=1", Run<RedirectResult>("kzu", "oss", 1, "r").Url);
 
     // DevDiv defaults
-    Assert.StartsWith("https://dev.azure.com/DevDiv/DevDiv/_releaseDefinition?definitionId=", Run<RedirectResult>("DevDiv", "10000").Url);
+    Assert.StartsWith("https://dev.azure.com/DevDiv/DevDiv/_release?definitionId=", Run<RedirectResult>("DevDiv", "10000").Url);
     Assert.StartsWith("https://dev.azure.com/DevDiv/DevDiv/_releaseProgress?releaseId=", Run<RedirectResult>("DevDiv", "320000").Url);
-    Assert.StartsWith("https://dev.azure.com/DevDiv/DevDiv/_releaseDefinition?definitionId=", Run<RedirectResult>("10000").Url);
+    Assert.StartsWith("https://dev.azure.com/DevDiv/DevDiv/_release?definitionId=", Run<RedirectResult>("10000").Url);
     Assert.StartsWith("https://dev.azure.com/DevDiv/DevDiv/_releaseProgress?releaseId=", Run<RedirectResult>("320000").Url);
 }
 
@@ -100,7 +100,7 @@ public static IActionResult Run(HttpRequest req, ILogger log, string org = null,
     // We know DevDiv to be huge and have over a thousand RD with over 300k releases
     if (!def)
     {
-        if (project.Equals("devdiv", StringComparison.OrdinalIgnoreCase) && parsed < 100000)
+        if (org.Equals("devdiv", StringComparison.OrdinalIgnoreCase) && project.Equals("devdiv", StringComparison.OrdinalIgnoreCase) && parsed < 100000)
         {
             def = true;
         } 
@@ -115,7 +115,7 @@ public static IActionResult Run(HttpRequest req, ILogger log, string org = null,
     }
 
     if (def)
-        return new RedirectResult($"https://dev.azure.com/{org}/{project}/_releaseDefinition?definitionId={parsed}&_a=environments-editor-preview");
+        return new RedirectResult($"https://dev.azure.com/{org}/{project}/_release?definitionId={parsed}");
     else
         return new RedirectResult($"https://dev.azure.com/{org}/{project}/_releaseProgress?releaseId={parsed}&_a=release-pipeline-progress");
 }
