@@ -1,5 +1,9 @@
 # Azure DevOps Linkinator
 
+![redirects](https://img.shields.io/endpoint.svg?url=https://azdo-www.azurewebsites.net/stats/redirect&label=%E2%A5%A4%20redirects&color=brightgreen&logo=Azure-DevOps&logoColor=brightgreen)
+![organizations](https://img.shields.io/endpoint.svg?url=https://azdo-www.azurewebsites.net/stats/org&label=organizations&color=blue&logo=Azure-DevOps&logoColor=blue)
+![projects](https://img.shields.io/endpoint.svg?url=https://azdo-www.azurewebsites.net/stats/project&label=projects&color=orange&logo=Azure-DevOps&logoColor=orange)
+
 Making [Azure DevOps](https://dev.azure.com) (a.k.a. `AzDO`) links effortlessly short and memorable.
 
 Because [URLs are UI](https://www.hanselman.com/blog/URLsAreUI.aspx), this project provides a nicer UI on top of the default URLs provided by [Azure DevOps](https://dev.azure.com). It does so with the following two components:
