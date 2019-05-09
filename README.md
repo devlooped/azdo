@@ -1,3 +1,8 @@
+---
+title: "AzDO Linkinator"
+permalink: _includes/readme.html
+---
+
 # Azure DevOps Linkinator
 
 Making [Azure DevOps](https://dev.azure.com) (a.k.a. `AzDO`) links effortlessly short and memorable.
