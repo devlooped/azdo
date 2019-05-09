@@ -1,0 +1,41 @@
+<html>
+
+<body>
+    <table>
+        <tr>
+            <td><span id="total"></span></td>
+            <td>redirects</td>
+        </tr>
+        <tr>
+            <td><span id="projects"></span></td>
+            <td>projects</td>
+        </tr>
+        <tr>
+            <td><span id="organizations"></span></td>
+            <td>organizations</td>
+        </tr>
+        <tr>
+            <td colspan="2">in the last 90 days</td>
+        </tr>
+    </table>
+    <!-- <h3><span id="total"></span> redirects across <span id="projects"></span> projects in <span id="organizations"></span> organizations in the last 90 days</h3> -->
+</body>
+<script type="text/javascript">
+    setTimeout(refresh);
+
+    let url = "http://azdo.io/stats";
+
+    async function refresh() {
+        let stats = (await (await fetch(url)).json());
+        if (total.innerHTML != stats.total)
+            total.innerHTML = stats.total;
+        if (projects.innerHTML != stats.projects)
+            projects.innerHTML = stats.projects;
+        if (organizations.innerHTML != stats.organizations)
+            organizations.innerHTML = stats.organizations;
+
+        setTimeout(refresh, 60000);
+    }
+</script>
+
+</html>
