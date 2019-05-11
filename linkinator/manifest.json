@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "AzDO Linkinator",
   "author": "Daniel Cazzulino",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "background": {
     "scripts": ["background.js"],
     "persistent": false
@@ -26,7 +26,8 @@
       "16": "images/AzDO16.png",
       "24": "images/AzDO24.png",
       "32": "images/AzDO32.png",
-      "64": "images/AzDO64.png"
+      "64": "images/AzDO64.png",
+      "128": "images/AzDO128.png"
     },
     "default_title": "Create a nice short AzDO link and copy to clipboard!"
   },
