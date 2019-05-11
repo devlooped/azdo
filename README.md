@@ -18,7 +18,6 @@ The latter is a must since even the most beautiful URIs are annoying to type by 
 1. Install the [browser extension](http://browser.azdo.io/) from the Chrome store.
 2. Navigate to a build, release, work item or wiki page in your [AzDO](https://dev.azure.com) project.
 3. Click the AzDO linkinator icon [![icon](https://github.com/kzu/azdo/raw/master/linkinator/images/AzDO16.png)](http://browser.azdo.io) in the browser toolbar.
-
 4. Paste the URL you got on the clipboard and enjoy!
 
 The following are the supported URL shortening schemes:
