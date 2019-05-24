@@ -1,8 +1,8 @@
 # Azure DevOps Linkinator
 
-[![redirects](https://img.shields.io/endpoint.svg?url=https://azdo-www.azurewebsites.net/stats/redirect&label=%E2%A5%A4%20redirects&color=brightgreen&logo=Azure-DevOps&logoColor=brightgreen)](http://azdo.io)
-[![organizations](https://img.shields.io/endpoint.svg?url=https://azdo-www.azurewebsites.net/stats/org&label=organizations&color=blue&logo=Azure-DevOps&logoColor=blue)](http://azdo.io)
-[![projects](https://img.shields.io/endpoint.svg?url=https://azdo-www.azurewebsites.net/stats/project&label=projects&color=orange&logo=Azure-DevOps&logoColor=orange)](http://azdo.io)
+![redirects](https://img.shields.io/endpoint.svg?url=https://azdo-www.azurewebsites.net/stats/redirect&label=%E2%A5%A4%20redirects&color=brightgreen&logo=Azure-DevOps&logoColor=brightgreen)
+![organizations](https://img.shields.io/endpoint.svg?url=https://azdo-www.azurewebsites.net/stats/org&label=organizations&color=blue&logo=Azure-DevOps&logoColor=blue)
+![projects](https://img.shields.io/endpoint.svg?url=https://azdo-www.azurewebsites.net/stats/project&label=projects&color=orange&logo=Azure-DevOps&logoColor=orange)
 
 Give [Azure DevOps](https://dev.azure.com) (a.k.a. AzDO) short, beautiful and memorable URLs with no effort.
 
