@@ -1,4 +1,5 @@
 theme: jekyll-theme-minimal
 title: AzDO Linkinator
 logo: https://github.com/kzu/azdo/raw/master/linkinator/images/AzDO64.png
+description: Give Azure DevOps (a.k.a. AzDO) short, beautiful and memorable URLs
 google_analytics: UA-20330792-6
