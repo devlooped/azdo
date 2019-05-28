@@ -29,7 +29,6 @@ function onClicked(tab) {
         var shortUrl = href.pathname.substring(1) + href.search;
         console.info('Processing ' + shortUrl);
         shortUrl = shortenUrl(href.hostname, shortUrl);
-        // TODO: this won't work with other org/projects
         copy(shortUrl);
       }
     });
@@ -150,6 +149,14 @@ function shortenUrl(hostname, shortUrl) {
   return { skipped: true };
 }
 
+chrome.webNavigation.onCommitted.addListener(function(e) {
+  chrome.tabs.query( { active: true, currentWindow: true }, function( tabs ) {
+    var tab = tabs[0];
+    var url = tab.url.replace("devdiv.visualstudio.com/", "dev.azure.com/DevDiv/");
+    chrome.tabs.update(tabs[0].id, { url: url } ); 
+  });
+}, { url: [{ hostSuffix: 'devdiv.visualstudio.com' }]});
+
 chrome.pageAction.onClicked.addListener(onClicked);
 
 // When the extension is installed or upgraded ...
@@ -163,25 +170,15 @@ chrome.runtime.onInstalled.addListener(function() {
         conditions: [
           new chrome.declarativeContent.PageStateMatcher({
             pageUrl: { urlContains: 'devdiv.visualstudio.com' },
-          })
-        ],
-        // And shows the extension's page action.
-        actions: [ new chrome.declarativeContent.ShowPageAction() ]
-      },
-      {
-        conditions: [
+          }),
           new chrome.declarativeContent.PageStateMatcher({
             pageUrl: { urlContains: 'dev.azure.com' },
-          })
-        ],
-        actions: [ new chrome.declarativeContent.ShowPageAction() ]
-      },
-      {
-        conditions: [
+          }),
           new chrome.declarativeContent.PageStateMatcher({
             pageUrl: { urlContains: 'developercommunity.visualstudio.com/content/problem/' },
           })
         ],
+        // And shows the extension's page action.
         actions: [ new chrome.declarativeContent.ShowPageAction() ]
       }
     ]);
