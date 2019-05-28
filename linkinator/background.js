@@ -1,3 +1,4 @@
+/// <reference path="../chrome.d.ts" />
 function copy(text) {
   var copyFrom = document.createElement('textarea');
   copyFrom.textContent = text;
