@@ -63,7 +63,16 @@ public static IActionResult Run(HttpRequest req, ILogger log, string org = null,
     }
 
     var path = req.Path.Value.Replace($"/{org}/{project}", "/");
-    var location = $"https://dev.azure.com/{org}/{project}/_wiki/wikis/{project}.wiki?pagePath={path}{req.QueryString}";
+    if (!req.QueryString.HasValue)
+    {
+        // Default mode is to replace dashes with spaces
+        path = path.Replace('-', ' ');
+    } 
+    else if (req.QueryString.Value == "?u")
+    {
+        path = path.Replace('_', ' ');
+    }
+    var location = $"https://dev.azure.com/{org}/{project}/_wiki/wikis/{project}.wiki?pagePath={path}";
 
     new TelemetryClient(TelemetryConfiguration.Active).TrackEvent(
         "redirect", new Dictionary<string, string>

@@ -56,6 +56,25 @@ function shortenUrl(hostname, shortUrl) {
     var domain = shortUrl.includes('DevDiv/_wiki/wikis/') ? 'http://wiki.devdiv.io/' : 'http://wiki.azdo.io/';
     var pagePath = indexOfEndPath == -1 ? shortUrl.substring(indexOfPagePath) : shortUrl.substring(indexOfPagePath, indexOfEndPath);
     pagePath = decodeURIComponent(pagePath).replace(/^\//, "");
+    // page path query string processing hint for azure function:
+    // [none] = replace dashes with spaces. Most common case, made short and nice
+    // ?u = replace underscores with spaces
+    // ?b = bare, do not replace anything (either there were no spaces, which is uncommon in wikis, 
+    //      or there were, but there were also both `-` and `_` so no replacement could be provided)
+    if (pagePath.indexOf(' ') != -1) {
+      // Improve URI when it has spaces
+      if (pagePath.indexOf('-') == -1) {
+        pagePath = pagePath.replace(/ /g, '-');
+      } else if (pagePath.indexOf('_') == -1) {
+        pagePath = pagePath.replace(/ /g, '_') + "?u";
+      } else {
+        // Just url-encode the spaces :(
+        pagePath = encodeURIComponent(pagePath) + "?b";
+      }
+    } else {
+      // No spaces, force bare treatment to preserve path intact.
+      pagePath +=  "?b";
+    }
 
     if (org == "DevDiv" && project == "DevDiv")
       return domain + pagePath;
