@@ -76,7 +76,7 @@ function shortenUrl(hostname, shortUrl) {
       pagePath +=  "?b";
     }
 
-    if (org == "DevDiv" && project == "DevDiv")
+    if (org.toLowerCase() == "devdiv" && project.toLowerCase() == "devdiv")
       return domain + pagePath;
     else 
       return domain + org + '/' + project + '/' + pagePath;
@@ -97,10 +97,10 @@ function shortenUrl(hostname, shortUrl) {
 
     var id = buildId ? parseInt(buildId[1]) : parseInt(definitionId[1]);
     var suffix = '';
-    if (org == "DevDiv" && project == "DevDiv")
+    if (org.toLowerCase() == "devdiv" && project.toLowerCase() == "devdiv")
       return 'http://build.azdo.io/' + id;
     
-    if (org != "DevDiv") {
+    if (org.toLowerCase() != "devdiv") {
       // Match build-azdo function ranges to consider IDs BD or builds.
       if (definitionId && id >= 200)
         suffix = '?d';
@@ -115,7 +115,7 @@ function shortenUrl(hostname, shortUrl) {
     var buildId = /id=(\d+)/.exec(shortUrl);
     var id = parseInt(buildId[1]);
 
-    if (org == "DevDiv" && project == "DevDiv") {
+    if (org.toLowerCase() == "devdiv" && project.toLowerCase() == "devdiv") {
       return 'http://build.azdo.io/' + id;
     } else {
       // Match build-azdo function ranges to consider IDs BD or builds.
@@ -129,7 +129,7 @@ function shortenUrl(hostname, shortUrl) {
     var definitionId = /definitionId=(\d+)/.exec(shortUrl);
     var id = parseInt(definitionId[1]);
 
-    if (org == "DevDiv" && project == "DevDiv") {
+    if (org.toLowerCase() == "devdiv" && project.toLowerCase() == "devdiv") {
       return 'http://release.azdo.io/' + id;
     } else {
       // Match build-azdo function ranges to consider IDs RD or releases.
@@ -143,7 +143,7 @@ function shortenUrl(hostname, shortUrl) {
     var releaseId = /releaseId=(\d+)/.exec(shortUrl);
     var id = parseInt(releaseId[1]);
 
-    if (org == "DevDiv" && project == "DevDiv") {
+    if (org.toLowerCase() == "devdiv" && project.toLowerCase() == "devdiv") {
       return 'http://release.azdo.io/' + id;
     } else {
       // Match build-azdo function ranges to consider IDs RD or releases.
@@ -152,7 +152,7 @@ function shortenUrl(hostname, shortUrl) {
     }
   }
 
-  if (org == "DevDiv" && project == "DevDiv" && shortUrl.includes('/pullrequest/')) {
+  if (org.toLowerCase() == "devdiv" && project.toLowerCase() == "devdiv" && shortUrl.includes('/pullrequest/')) {
     var match = /_git\/(.+)\/pullrequest\/(\d+)/.exec(shortUrl);
     if (match[1] == 'VS') 
       // Make the default project VS, to make it even shorter
