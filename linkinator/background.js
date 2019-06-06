@@ -55,7 +55,8 @@ function shortenUrl(hostname, shortUrl) {
     // place /DevDiv/DevDiv back server-side
     var domain = shortUrl.includes('DevDiv/_wiki/wikis/') ? 'http://wiki.devdiv.io/' : 'http://wiki.azdo.io/';
     var pagePath = indexOfEndPath == -1 ? shortUrl.substring(indexOfPagePath) : shortUrl.substring(indexOfPagePath, indexOfEndPath);
-    pagePath = decodeURIComponent(pagePath).replace(/^\//, "");
+    // The first decode gives us a slash-separated path, which we need to decode individually to decode double encoded chars (i.e. & and -)
+    pagePath = decodeURIComponent(pagePath).split('/').map(x => decodeURIComponent(x)).join('/').replace(/^\//, "");
     // page path query string processing hint for azure function:
     // [none] = replace dashes with spaces. Most common case, made short and nice
     // ?u = replace underscores with spaces
@@ -68,13 +69,17 @@ function shortenUrl(hostname, shortUrl) {
       } else if (pagePath.indexOf('_') == -1) {
         pagePath = pagePath.replace(/ /g, '_') + "?u";
       } else {
-        // Just url-encode the spaces :(
-        pagePath = encodeURIComponent(pagePath) + "?b";
+        // Can't replace spaces, bare treatment to preserve path intact.
+        pagePath = pagePath.split('/').map(x => encodeURIComponent(x)).join('/') + "?b";
       }
     } else {
       // No spaces, force bare treatment to preserve path intact.
-      pagePath +=  "?b";
+      pagePath = pagePath.split('/').map(x => encodeURIComponent(x)).join('/') + "?b";
     }
+
+    // This would be the safest way, but it would also URL-encode characters that are 
+    // usable in a copy-pasted URL, such as & and - in the URL (browser know how to encode/decode)
+    // pagePath = pagePath.split('/').map(x => encodeURIComponent(x)).join('/');
 
     if (org.toLowerCase() == "devdiv" && project.toLowerCase() == "devdiv")
       return domain + pagePath;
