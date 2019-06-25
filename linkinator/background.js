@@ -143,7 +143,7 @@ function shortenUrl(hostname, shortUrl) {
     }
   }
 
-  if (shortUrl.includes('/_releaseProgress?') && shortUrl.includes('releaseId=')) {
+  if ((shortUrl.includes('/_releaseProgress?') || shortUrl.includes('release-pipeline-progress')) && shortUrl.includes('releaseId=')) {
     // New release pipeline
     var releaseId = /releaseId=(\d+)/.exec(shortUrl);
     var id = parseInt(releaseId[1]);
