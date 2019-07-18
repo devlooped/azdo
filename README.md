@@ -31,13 +31,13 @@ The following are the supported URL shortening schemes:
 
 `http://build.azdo.io/{org}/{project}/{id}`
 
-The ID can be either a specific ID or a build definition ID. The linkinator will automatically redirect to the right thing.
+The ID can be either a specific ID or a build definition ID (a.k.a. pipeline ID). The linkinator will automatically redirect to the right thing.
 
 ## Releases
 
 `http://releases.azdo.io/{org}/{project}/{id}`
 
-The ID can be either a specific ID or a build definition ID. The linkinator will automatically redirect to the right thing.
+The ID can be either a specific release ID or a release definition ID. The linkinator will automatically redirect to the right thing.
 
 ## Work Items
 
