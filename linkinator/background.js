@@ -26,7 +26,7 @@ function onClicked(tab) {
       "code": "if (window.jQuery) { $('.workitem-dialog a.caption').attr('href'); } else { '' }"
     }, function (result) {
       href = result[0];
-      if (href) {
+      if (href && href.pathname) {
         var shortUrl = href.pathname.substring(1) + href.search;
         console.info('Processing ' + shortUrl);
         shortUrl = shortenUrl(href.hostname, shortUrl);
@@ -48,6 +48,7 @@ function shortenUrl(hostname, shortUrl) {
     project = org;
   }
 
+  // ================== Wiki ======================
   if (shortUrl.includes('/_wiki/wikis/')) {
     var indexOfPagePath = shortUrl.indexOf('pagePath=') + 9;
     var indexOfEndPath = shortUrl.indexOf('&', indexOfPagePath);
@@ -93,9 +94,16 @@ function shortenUrl(hostname, shortUrl) {
   //   return 'http://wiki.devdiv.io/' + pageId;
   // }
 
+  // ================== WorkItems ======================
   if (shortUrl.includes('/_workitems/edit/'))
     return 'http://work.azdo.io/' + shortUrl.substring(shortUrl.indexOf('/_workitems/edit/') + 17);
+
+  if (shortUrl.includes('workitem=')) {
+    var id = /workitem=(\d+)/.exec(shortUrl);
+    return 'http://work.azdo.io/' + id[1];
+  }
     
+  // ================== Build ======================
   if (shortUrl.includes('/_build')) {
     var buildId = /buildId=(\d+)/.exec(shortUrl);
     var definitionId = /definitionId=(\d+)/.exec(shortUrl);
@@ -129,6 +137,7 @@ function shortenUrl(hostname, shortUrl) {
     }
   }
 
+  // ================== Release ======================
   if (shortUrl.includes('/_releaseDefinition?definitionId=') || shortUrl.includes('/_release?definitionId=')) {
     // New release pipeline
     var definitionId = /definitionId=(\d+)/.exec(shortUrl);
@@ -157,6 +166,7 @@ function shortenUrl(hostname, shortUrl) {
     }
   }
 
+  // ================== PullRequest ======================
   if (org.toLowerCase() == "devdiv" && project.toLowerCase() == "devdiv" && shortUrl.includes('/pullrequest/')) {
     var match = /_git\/(.+)\/pullrequest\/(\d+)/.exec(shortUrl);
     if (match[1] == 'VS') 
