@@ -138,7 +138,8 @@ function shortenUrl(hostname, shortUrl) {
   }
 
   // ================== Release ======================
-  if (shortUrl.includes('/_releaseDefinition?definitionId=') || shortUrl.includes('/_release?definitionId=')) {
+  if (shortUrl.includes('/_releaseDefinition?definitionId=') || 
+      (shortUrl.includes('/_release') && shortUrl.includes('definitionId='))) {
     // New release pipeline
     var definitionId = /definitionId=(\d+)/.exec(shortUrl);
     var id = parseInt(definitionId[1]);
