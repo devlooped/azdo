@@ -71,11 +71,26 @@ static IActionResult Run(string org = null, string project = null, double? id = 
     };
     
     var services = new ServiceCollection().AddLogging(builder => builder.AddConsole());
-    return Run(request, services.BuildServiceProvider().GetService<ILoggerFactory>().CreateLogger("Console"), org, project, id);
+    
+    var args = new List<string>();
+    if (org != null)
+        args.Add(org);
+    if (project != null)
+        args.Add(project);
+    if (id != null)
+        args.Add(id.Value.ToString());
+
+    return Run(request, services.BuildServiceProvider().GetService<ILoggerFactory>().CreateLogger("Console"), string.Join("/", args));
 }
 
-public static IActionResult Run(HttpRequest req, ILogger log, string org = null, string project = null, double? id = null)
+public static IActionResult Run(HttpRequest req, ILogger log, string path)
+//public static IActionResult Run(HttpRequest req, ILogger log, string org = null, string project = null, double? id = null)
 {
+    var parts = path.Split('/');
+    var org = parts.FirstOrDefault();
+    var project = parts.Skip(1).FirstOrDefault();
+    double? id = parts.Skip(2).Select(x => double.TryParse(x, out var value) ? value : default(double?)).FirstOrDefault();
+
     var parsed = id.HasValue ? id.Value : 0d;
     
     // If the id is omitted, we try to parse it from the org (for DevDiv's super-short 

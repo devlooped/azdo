@@ -111,7 +111,7 @@ function shortenUrl(hostname, shortUrl) {
     var id = buildId ? parseInt(buildId[1]) : parseInt(definitionId[1]);
     var suffix = '';
     if (org.toLowerCase() == "devdiv" && project.toLowerCase() == "devdiv")
-      return 'http://build.azdo.io/' + id;
+      return 'https://build.azdo.io/' + id;
     
     if (org.toLowerCase() != "devdiv") {
       // Match build-azdo function ranges to consider IDs BD or builds.
@@ -121,7 +121,7 @@ function shortenUrl(hostname, shortUrl) {
         suffix = '?b';
     }
 
-    return 'http://build.azdo.io/' + org + '/' + project + '/' + id + suffix;
+    return 'https://build.azdo.io/' + org + '/' + project + '/' + id + suffix;
   }
 
   if (shortUrl.includes('edit-build-definition&id=')) {
@@ -129,11 +129,11 @@ function shortenUrl(hostname, shortUrl) {
     var id = parseInt(buildId[1]);
 
     if (org.toLowerCase() == "devdiv" && project.toLowerCase() == "devdiv") {
-      return 'http://build.azdo.io/' + id;
+      return 'https://build.azdo.io/' + id;
     } else {
       // Match build-azdo function ranges to consider IDs BD or builds.
       // A >=200 ID will not be considered a BD by default, so force it in that case.
-      return 'http://build.azdo.io/' + org + '/' + project + '/' + id + (id >= 200 ? '?d' : '');
+      return 'https://build.azdo.io/' + org + '/' + project + '/' + id + (id >= 200 ? '?d' : '');
     }
   }
 
