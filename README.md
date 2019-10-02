@@ -29,7 +29,7 @@ The following are the supported URL shortening schemes:
 
 ## Builds
 
-`http://build.azdo.io/{org}/{project}/{id}`
+`https://build.azdo.io/{org}/{project}/{id}`
 
 The ID can be either a specific ID or a build definition ID (a.k.a. pipeline ID). The linkinator will automatically redirect to the right thing.
 
@@ -58,9 +58,9 @@ The ID can be either a specific release ID or a release definition ID. The linki
 | ------------ |-------------|
 | http://work.azdo.io/WORK_ITEM_ID | https://dev.azure.com/[ORG]/[PROJECT]/_workitems/edit/[WORK_ITEM_ID] |
 | http://wiki.azdo.io/Some/Subfolder/Page | https://dev.azure.com/[ORG]/[PROJECT]/_wiki/wikis/[ORG]/[PROJECT].wiki?pagePath=%2FSome%2FSubfolder%2FPage |
-| http://build.azdo.io/BUILD_ID | https://dev.azure.com/[ORG]/[PROJECT]/_build/index?buildId=[BUILD_ID] |
-| http://build.azdo.io/DEFINITION_ID | https://dev.azure.com/[ORG]/[PROJECT]/_build/index?definitionId=[DEFINITION_ID]&_a=completed |
-| http://build.azdo.io/DEFINITION_ID | https://dev.azure.com/[ORG]/[PROJECT]/[ORG]/[PROJECT]%20Team/_build?definitionId=[DEFINITION_ID]&_a=summary
+| https://build.azdo.io/BUILD_ID | https://dev.azure.com/[ORG]/[PROJECT]/_build/index?buildId=[BUILD_ID] |
+| https://build.azdo.io/DEFINITION_ID | https://dev.azure.com/[ORG]/[PROJECT]/_build/index?definitionId=[DEFINITION_ID]&_a=completed |
+| https://build.azdo.io/DEFINITION_ID | https://dev.azure.com/[ORG]/[PROJECT]/[ORG]/[PROJECT]%20Team/_build?definitionId=[DEFINITION_ID]&_a=summary
 | http://release.azdo.io/DEFINITION_ID | https://dev.azure.com/[ORG]/[PROJECT]/_release?definitionId=[DEFINITION_ID]&_a=releases |
 | http://release.azdo.io/DEFINITION_ID | https://dev.azure.com/[ORG]/[PROJECT]/_releaseDefinition?definitionId=[DEFINITION_ID]&_a=environments-editor-preview |
 | http://release.azdo.io/RELEASE_ID | https://dev.azure.com/[ORG]/[PROJECT]/_release?releaseId=[RELEASE_ID]&_a=release-summary |
