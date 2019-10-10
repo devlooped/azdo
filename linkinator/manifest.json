@@ -2,11 +2,19 @@
   "manifest_version": 2,
   "name": "AzDO Linkinator",
   "author": "Daniel Cazzulino",
-  "version": "0.5.12",
+  "version": "0.5.14",
   "background": {
     "scripts": ["background.js"],
     "persistent": false
-  },  
+  },
+  "commands": {
+    "azdo-shorten-url": {
+    "suggested_key": {
+    "default": "Ctrl+Shift+S"
+    },
+    "description": "Shorten AzDO Url and copy to clipboard"
+    }
+  },
   "content_scripts": [
     {
       "matches": ["https://devdiv.visualstudio.com/*"],
@@ -29,10 +37,9 @@
       "64": "images/AzDO64.png",
       "128": "images/AzDO128.png"
     },
-    "default_title": "Create a nice short AzDO link and copy to clipboard!"
+    "default_title": "Ctrl+Shift+S | Create a nice short AzDO link and copy to clipboard!"
   },
   "permissions": [
-    "tabs",
     "declarativeContent",
     "activeTab",
     "webNavigation",

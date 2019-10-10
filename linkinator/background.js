@@ -22,7 +22,7 @@ function onClicked(tab) {
 
   copy(newUrl);
 
-  chrome.tabs.executeScript(tab.id, {
+  chrome.tabs.executeScript({
     "code": "document.querySelector('.grid-row-current .work-item-title-link').href"
   }, function (result) {
     href = result[0];
@@ -198,6 +198,17 @@ chrome.webNavigation.onCommitted.addListener(function(e) {
 }, { url: [{ hostSuffix: 'devdiv.visualstudio.com' }]});
 
 chrome.pageAction.onClicked.addListener(onClicked);
+
+chrome.commands.onCommand.addListener(function(command) {
+  if (command == "azdo-shorten-url") {
+    // Get the currently selected tab
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      // Toggle the pinned status
+      var current = tabs[0]
+      onClicked(current);
+    });
+  }
+});
 
 // When the extension is installed or upgraded ...
 chrome.runtime.onInstalled.addListener(function() {
