@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "AzDO Linkinator",
   "author": "Daniel Cazzulino",
-  "version": "0.5.10",
+  "version": "0.5.12",
   "background": {
     "scripts": ["background.js"],
     "persistent": false
@@ -35,6 +35,7 @@
     "tabs",
     "declarativeContent",
     "activeTab",
-    "webNavigation"    
+    "webNavigation",
+    "https://dev.azure.com/*"
   ]
 }

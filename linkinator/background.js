@@ -23,16 +23,20 @@ function onClicked(tab) {
   copy(newUrl);
 
   chrome.tabs.executeScript(tab.id, {
-      "code": "if (window.jQuery) { $('.workitem-dialog a.caption').attr('href'); } else { '' }"
-    }, function (result) {
-      href = result[0];
-      if (href && href.pathname) {
-        var shortUrl = href.pathname.substring(1) + href.search;
+    "code": "document.querySelector('.grid-row-current .work-item-title-link').href"
+  }, function (result) {
+    href = result[0];
+    if (href) {
+      var parser = document.createElement('a');
+      parser.href = href;
+      if (parser.pathname) {
+        var shortUrl = parser.pathname.substring(1) + parser.search;
         console.info('Processing ' + shortUrl);
-        shortUrl = shortenUrl(href.hostname, shortUrl);
-        copy(shortUrl);
+        shortUrl = shortenUrl(parser.hostname, shortUrl);
+        copy(shortUrl);  
       }
-    });
+    }
+  });
 }
 
 function shortenUrl(hostname, shortUrl) {
