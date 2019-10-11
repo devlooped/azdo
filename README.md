@@ -1,15 +1,20 @@
 # Azure DevOps Linkinator
 
-![redirects](https://img.shields.io/endpoint.svg?url=https://azdo-www.azurewebsites.net/stats/redirect&label=%E2%A5%A4%20redirects&color=brightgreen&logo=Azure-DevOps&logoColor=brightgreen)
-![organizations](https://img.shields.io/endpoint.svg?url=https://azdo-www.azurewebsites.net/stats/org&label=organizations&color=blue&logo=Azure-DevOps&logoColor=blue)
-![projects](https://img.shields.io/endpoint.svg?url=https://azdo-www.azurewebsites.net/stats/project&label=projects&color=orange&logo=Azure-DevOps&logoColor=orange)
+![redirects](https://img.shields.io/endpoint.svg?url=https://browser.azdo.io/stats/redirect&label=%E2%A5%A4%20redirects&color=brightgreen&logo=Azure-DevOps&logoColor=brightgreen)
+![organizations](https://img.shields.io/endpoint.svg?url=https://browser.azdo.io/stats/org&label=organizations&color=blue&logo=Azure-DevOps&logoColor=blue)
+![projects](https://img.shields.io/endpoint.svg?url=https://browser.azdo.io/stats/project&label=projects&color=orange&logo=Azure-DevOps&logoColor=orange)
+
+[![edge](https://img.shields.io/badge/edge_beta-install-nothing?logo=Microsoft%20Edge&logoColor=9EFB0D&labelColor=blue&color=brightgreen)](https://browser.azdo.io)
+[![chrome](https://img.shields.io/badge/chrome-install-4285F4?logo=Google%20Chrome)](https://browser.azdo.io)
+
+![ctrl+shit+s shortcut](https://img.shields.io/badge/Ctrl+Shift+S%20%3E-clipboard-4285F4) ![or](https://img.shields.io/badge/%7C%7C-%20?labelColor=black&color=black) ![toolbar button](https://img.shields.io/badge/%3E-clipboard-4285F4?logo=Azure%20DevOps&logoColor=0078D7&labelColor=white)
 
 Give [Azure DevOps](https://dev.azure.com) (a.k.a. AzDO) short, beautiful and memorable URLs with no effort.
 
 Because [URLs are UI](https://www.hanselman.com/blog/URLsAreUI.aspx), this project provides a nicer UI on top of the default URLs provided by [Azure DevOps](https://dev.azure.com). It does so with the following two components:
 
 * A 100% serverless URL redirection powered by [Azure Functions](http://functions.azure.com) 2.0
-* A Google Chrome and [Microsoft Edge Insider](https://www.microsoftedgeinsider.com/) [browser extension](http://browser.azdo.io/) to seamlessly create and copy the URL to the clipboard from the current [AzDO](https://dev.azure.com) page.
+* A Google Chrome and [Microsoft Edge Insider](https://www.microsoftedgeinsider.com/) [browser extension](https://browser.azdo.io/) to seamlessly create and copy the URL to the clipboard from the current [AzDO](https://dev.azure.com) page.
 
 The latter is a must since even the most beautiful URIs are annoying to type by hand :).
 
@@ -17,13 +22,13 @@ The latter is a must since even the most beautiful URIs are annoying to type by 
 
 1. Install the [browser extension](http://browser.azdo.io/) from the Chrome store.
 2. Navigate to a build, release, work item or wiki page in your [AzDO](https://dev.azure.com) project.
-3. Click the AzDO linkinator icon [![icon](https://github.com/kzu/azdo/raw/master/linkinator/images/AzDO16.png)](http://browser.azdo.io) in the browser toolbar.
+3. Click the AzDO linkinator icon [![icon](https://github.com/kzu/azdo/raw/master/linkinator/images/AzDO16.png)](https://browser.azdo.io) in the browser toolbar.
 
 ![Screenshot](https://raw.githubusercontent.com/kzu/azdo/master/img/SmallPreview.png)
 
 4. Paste the URL you got on the clipboard and enjoy!
 
-The following are the supported URL shortening schemes:
+The following are the supported URL shortening schemes:r
 
 > NOTE: in all cases, if `org` == `project`, the latter will be omitted in the copied URL to make it even shorter.
 
