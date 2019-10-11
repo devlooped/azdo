@@ -22,8 +22,15 @@ function onClicked(tab) {
 
   copy(newUrl);
 
+  // Additional probing for currently selected item in specific views that have lists 
+  // of work items.
+  findSelectedUrl("document.querySelector('.work-items-tab-content .is-selected [data-automation-key=\"System.Title\"] .work-item-title-link').href");
+  findSelectedUrl("document.querySelector('.grid-row-selected.grid-row-current .work-item-title-link').href");
+}
+
+function findSelectedUrl(querySelector) {
   chrome.tabs.executeScript({
-    "code": "document.querySelector('.grid-row-current .work-item-title-link').href"
+    "code": querySelector
   }, function (result) {
     href = result[0];
     if (href) {
@@ -36,7 +43,7 @@ function onClicked(tab) {
         copy(shortUrl);  
       }
     }
-  });
+  });  
 }
 
 function shortenUrl(hostname, shortUrl) {
