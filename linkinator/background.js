@@ -26,6 +26,7 @@ function onClicked(tab) {
   // of work items.
   findSelectedUrl("document.querySelector('.work-items-tab-content .is-selected [data-automation-key=\"System.Title\"] .work-item-title-link').href");
   findSelectedUrl("document.querySelector('.grid-row-selected.grid-row-current .work-item-title-link').href");
+  findSelectedUrl("document.querySelector('.work-item-form-container .workitem-info-bar a').href");
 }
 
 function findSelectedUrl(querySelector) {
