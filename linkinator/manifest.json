@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "AzDO Linkinator",
   "author": "Daniel Cazzulino",
-  "version": "0.5.16",
+  "version": "0.5.17",
   "background": {
     "scripts": ["background.js"],
     "persistent": false

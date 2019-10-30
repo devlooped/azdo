@@ -12,10 +12,10 @@ function copy(text) {
 function onClicked(tab) {
   var parser = document.createElement('a');
   parser.href = tab.url.toString();
-  var shortUrl = parser.pathname.substring(1) + parser.search;
+  var relativeUrl = parser.pathname.substring(1) + parser.search;
 
-  console.info('Processing ' + shortUrl);
-  var newUrl = shortenUrl(parser.hostname, shortUrl);
+  console.info('Processing ' + relativeUrl);
+  var newUrl = shortenUrl(parser.hostname, relativeUrl);
   // If no replacement was made, copy again the original url.
   if (newUrl.skipped)
     newUrl = tab.url;
@@ -47,8 +47,8 @@ function findSelectedUrl(querySelector) {
   });  
 }
 
-function shortenUrl(hostname, shortUrl) {
-  var segments = shortUrl.split('/');
+function shortenUrl(hostname, relativeUrl) {
+  var segments = relativeUrl.split('/');
   var org = segments[0];
   var project = segments[1];
   if (hostname == 'devdiv.visualstudio.com')
@@ -61,64 +61,33 @@ function shortenUrl(hostname, shortUrl) {
   }
 
   // ================== Wiki ======================
-  if (shortUrl.includes('/_wiki/wikis/')) {
-    var indexOfPagePath = shortUrl.indexOf('pagePath=') + 9;
-    var indexOfEndPath = shortUrl.indexOf('&', indexOfPagePath);
+  if (relativeUrl.includes('/_wiki/wikis/')) {
     // Special case DevDiv: we make it even shorter, and switch domains to 
     // place /DevDiv/DevDiv back server-side
-    var domain = shortUrl.includes('DevDiv/_wiki/wikis/') ? 'http://wiki.devdiv.io/' : 'http://wiki.azdo.io/';
-    var pagePath = indexOfEndPath == -1 ? shortUrl.substring(indexOfPagePath) : shortUrl.substring(indexOfPagePath, indexOfEndPath);
-    // The first decode gives us a slash-separated path, which we need to decode individually to decode double encoded chars (i.e. & and -)
-    pagePath = decodeURIComponent(pagePath).split('/').map(x => decodeURIComponent(x)).join('/').replace(/^\//, "");
-    // page path query string processing hint for azure function:
-    // [none] = replace dashes with spaces. Most common case, made short and nice
-    // ?u = replace underscores with spaces
-    // ?b = bare, do not replace anything (either there were no spaces, which is uncommon in wikis, 
-    //      or there were, but there were also both `-` and `_` so no replacement could be provided)
-    if (pagePath.indexOf(' ') != -1) {
-      // Improve URI when it has spaces
-      if (pagePath.indexOf('-') == -1) {
-        pagePath = pagePath.replace(/ /g, '-');
-      } else if (pagePath.indexOf('_') == -1) {
-        pagePath = pagePath.replace(/ /g, '_') + "?u";
-      } else {
-        // Can't replace spaces, bare treatment to preserve path intact.
-        pagePath = pagePath.split('/').map(x => encodeURIComponent(x)).join('/') + "?b";
-      }
-    } else {
-      // No spaces, force bare treatment to preserve path intact.
-      pagePath = pagePath.split('/').map(x => encodeURIComponent(x)).join('/') + "?b";
+    var domain = relativeUrl.includes('DevDiv/_wiki/wikis/') ? 'http://wiki.devdiv.io/' : 'http://wiki.azdo.io/';
+    var match = /_wiki\/wikis\/.*\.wiki\/(\d+)\/(.*)/.exec(relativeUrl);
+    if (match) {
+      // New short format does not encode the page path but rather uses the page id + its name
+      if (org.toLowerCase() == "devdiv" && project.toLowerCase() == "devdiv")
+        return domain + match[1] + '/' + match[2];
+      else 
+        return domain + org + '/' + project + '/' + match[1] + '/' + match[2];
     }
-
-    // This would be the safest way, but it would also URL-encode characters that are 
-    // usable in a copy-pasted URL, such as & and - in the URL (browser know how to encode/decode)
-    // pagePath = pagePath.split('/').map(x => encodeURIComponent(x)).join('/');
-
-    if (org.toLowerCase() == "devdiv" && project.toLowerCase() == "devdiv")
-      return domain + pagePath;
-    else 
-      return domain + org + '/' + project + '/' + pagePath;
   }
 
-  // We could make wiki pages way shorter by just using the id instead... 
-  // if (shortUrl.includes('/_wiki/wikis/DevDiv.wiki/') && shortUrl.includes('pageId=')) {
-  //   var pageId = /pageId=(\d+)/.exec(shortUrl);
-  //   return 'http://wiki.devdiv.io/' + pageId;
-  // }
-
   // ================== WorkItems ======================
-  if (shortUrl.includes('/_workitems/edit/'))
-    return 'http://work.azdo.io/' + shortUrl.substring(shortUrl.indexOf('/_workitems/edit/') + 17);
+  if (relativeUrl.includes('/_workitems/edit/'))
+    return 'http://work.azdo.io/' + relativeUrl.substring(relativeUrl.indexOf('/_workitems/edit/') + 17);
 
-  if (shortUrl.includes('workitem=')) {
-    var id = /workitem=(\d+)/.exec(shortUrl);
+  if (relativeUrl.includes('workitem=')) {
+    var id = /workitem=(\d+)/.exec(relativeUrl);
     return 'http://work.azdo.io/' + id[1];
   }
     
   // ================== Build ======================
-  if (shortUrl.includes('/_build')) {
-    var buildId = /buildId=(\d+)/.exec(shortUrl);
-    var definitionId = /definitionId=(\d+)/.exec(shortUrl);
+  if (relativeUrl.includes('/_build')) {
+    var buildId = /buildId=(\d+)/.exec(relativeUrl);
+    var definitionId = /definitionId=(\d+)/.exec(relativeUrl);
 
     var id = buildId ? parseInt(buildId[1]) : parseInt(definitionId[1]);
     var suffix = '';
@@ -136,8 +105,8 @@ function shortenUrl(hostname, shortUrl) {
     return 'https://build.azdo.io/' + org + '/' + project + '/' + id + suffix;
   }
 
-  if (shortUrl.includes('edit-build-definition&id=')) {
-    var buildId = /id=(\d+)/.exec(shortUrl);
+  if (relativeUrl.includes('edit-build-definition&id=')) {
+    var buildId = /id=(\d+)/.exec(relativeUrl);
     var id = parseInt(buildId[1]);
 
     if (org.toLowerCase() == "devdiv" && project.toLowerCase() == "devdiv") {
@@ -150,10 +119,10 @@ function shortenUrl(hostname, shortUrl) {
   }
 
   // ================== Release ======================
-  if (shortUrl.includes('/_releaseDefinition?definitionId=') || 
-      (shortUrl.includes('/_release') && shortUrl.includes('definitionId='))) {
+  if (relativeUrl.includes('/_releaseDefinition?definitionId=') || 
+      (relativeUrl.includes('/_release') && relativeUrl.includes('definitionId='))) {
     // New release pipeline
-    var definitionId = /definitionId=(\d+)/.exec(shortUrl);
+    var definitionId = /definitionId=(\d+)/.exec(relativeUrl);
     var id = parseInt(definitionId[1]);
 
     if (org.toLowerCase() == "devdiv" && project.toLowerCase() == "devdiv") {
@@ -165,9 +134,9 @@ function shortenUrl(hostname, shortUrl) {
     }
   }
 
-  if ((shortUrl.includes('/_releaseProgress?') || shortUrl.includes('release-pipeline-progress')) && shortUrl.includes('releaseId=')) {
+  if ((relativeUrl.includes('/_releaseProgress?') || relativeUrl.includes('release-pipeline-progress')) && relativeUrl.includes('releaseId=')) {
     // New release pipeline
-    var releaseId = /releaseId=(\d+)/.exec(shortUrl);
+    var releaseId = /releaseId=(\d+)/.exec(relativeUrl);
     var id = parseInt(releaseId[1]);
 
     if (org.toLowerCase() == "devdiv" && project.toLowerCase() == "devdiv") {
@@ -180,8 +149,8 @@ function shortenUrl(hostname, shortUrl) {
   }
 
   // ================== PullRequest ======================
-  if (org.toLowerCase() == "devdiv" && project.toLowerCase() == "devdiv" && shortUrl.includes('/pullrequest/')) {
-    var match = /_git\/(.+)\/pullrequest\/(\d+)/.exec(shortUrl);
+  if (org.toLowerCase() == "devdiv" && project.toLowerCase() == "devdiv" && relativeUrl.includes('/pullrequest/')) {
+    var match = /_git\/(.+)\/pullrequest\/(\d+)/.exec(relativeUrl);
     if (match[1] == 'VS') 
       // Make the default project VS, to make it even shorter
       return 'http://pr.devdiv.io/' + match[2];
@@ -189,8 +158,8 @@ function shortenUrl(hostname, shortUrl) {
       return 'http://pr.devdiv.io/' + match[1] + '/' + match[2];
   }
 
-  if (shortUrl.includes('content/problem/')) {
-    var problemId = /problem\/(\d+)\//.exec(shortUrl);
+  if (relativeUrl.includes('content/problem/')) {
+    var problemId = /problem\/(\d+)\//.exec(relativeUrl);
     return 'http://feedback.devdiv.io/' + problemId[1];
   }
   

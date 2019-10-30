@@ -1,17 +1,17 @@
 <Query Kind="Program">
-  <Reference>&lt;RuntimeDirectory&gt;\System.Web.dll</Reference>
-  <Reference>&lt;RuntimeDirectory&gt;\System.Configuration.dll</Reference>
-  <Reference>&lt;RuntimeDirectory&gt;\System.DirectoryServices.dll</Reference>
-  <Reference>&lt;RuntimeDirectory&gt;\System.EnterpriseServices.dll</Reference>
-  <Reference>&lt;RuntimeDirectory&gt;\System.Web.RegularExpressions.dll</Reference>
-  <Reference>&lt;RuntimeDirectory&gt;\System.Design.dll</Reference>
-  <Reference>&lt;RuntimeDirectory&gt;\System.Web.ApplicationServices.dll</Reference>
-  <Reference>&lt;RuntimeDirectory&gt;\System.DirectoryServices.Protocols.dll</Reference>
-  <Reference>&lt;RuntimeDirectory&gt;\System.Web.Services.dll</Reference>
-  <Reference>&lt;RuntimeDirectory&gt;\Microsoft.Build.Utilities.v4.0.dll</Reference>
-  <Reference>&lt;RuntimeDirectory&gt;\System.Runtime.Caching.dll</Reference>
   <Reference>&lt;RuntimeDirectory&gt;\Microsoft.Build.Framework.dll</Reference>
   <Reference>&lt;RuntimeDirectory&gt;\Microsoft.Build.Tasks.v4.0.dll</Reference>
+  <Reference>&lt;RuntimeDirectory&gt;\Microsoft.Build.Utilities.v4.0.dll</Reference>
+  <Reference>&lt;RuntimeDirectory&gt;\System.Configuration.dll</Reference>
+  <Reference>&lt;RuntimeDirectory&gt;\System.Design.dll</Reference>
+  <Reference>&lt;RuntimeDirectory&gt;\System.DirectoryServices.dll</Reference>
+  <Reference>&lt;RuntimeDirectory&gt;\System.DirectoryServices.Protocols.dll</Reference>
+  <Reference>&lt;RuntimeDirectory&gt;\System.EnterpriseServices.dll</Reference>
+  <Reference>&lt;RuntimeDirectory&gt;\System.Runtime.Caching.dll</Reference>
+  <Reference>&lt;RuntimeDirectory&gt;\System.Web.ApplicationServices.dll</Reference>
+  <Reference>&lt;RuntimeDirectory&gt;\System.Web.dll</Reference>
+  <Reference>&lt;RuntimeDirectory&gt;\System.Web.RegularExpressions.dll</Reference>
+  <Reference>&lt;RuntimeDirectory&gt;\System.Web.Services.dll</Reference>
   <Reference>&lt;RuntimeDirectory&gt;\System.Windows.Forms.dll</Reference>
   <NuGetReference>Microsoft.ApplicationInsights</NuGetReference>
   <NuGetReference>Microsoft.AspNetCore.Mvc</NuGetReference>
@@ -19,6 +19,8 @@
   <NuGetReference>Microsoft.Extensions.Logging.Debug</NuGetReference>
   <NuGetReference>xunit.assert</NuGetReference>
   <Namespace>Microsoft.ApplicationInsights</Namespace>
+  <Namespace>Microsoft.ApplicationInsights.Channel</Namespace>
+  <Namespace>Microsoft.ApplicationInsights.Extensibility</Namespace>
   <Namespace>Microsoft.AspNetCore.Http</Namespace>
   <Namespace>Microsoft.AspNetCore.Http.Internal</Namespace>
   <Namespace>Microsoft.AspNetCore.Mvc</Namespace>
@@ -31,8 +33,21 @@
   <Namespace>System.Net</Namespace>
   <Namespace>System.Threading.Tasks</Namespace>
   <Namespace>Xunit</Namespace>
-  <Namespace>Microsoft.ApplicationInsights.Extensibility</Namespace>
-  <Namespace>Microsoft.ApplicationInsights.Channel</Namespace>
+  <AppConfig>
+    <Content>
+      <configuration>
+        <runtime>
+          <loadFromRemoteSources enabled="true" />
+          <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+            <dependentAssembly>
+              <assemblyIdentity name="System.Runtime.InteropServices.RuntimeInformation" publicKeyToken="b03f5f7f11d50a3a" culture="neutral" />
+              <bindingRedirect oldVersion="4.0.0.0-4.0.2.0" newVersion="4.0.2.0" />
+            </dependentAssembly>
+          </assemblyBinding>
+        </runtime>
+      </configuration>
+    </Content>
+  </AppConfig>
   <DisableMyExtensions>true</DisableMyExtensions>
 </Query>
 
@@ -53,6 +68,10 @@ void Main()
     // If project missing, go to docs
     Assert.IsType<RedirectResult>(Run("http://wiki.azdo.io/", "foo"));
     Assert.Equal("https://github.com/kzu/azdo#wiki", Run<RedirectResult>("http://wiki.azdo.io/", "foo").Url);
+
+	Assert.Equal(
+		"https://dev.azure.com/foo/oss/_wiki/wikis/oss.wiki/1/Hello-World",
+		Run<RedirectResult>("https://wiki.azdo.io/foo/oss/1/Hello-World", "foo", "oss").Url);
 }
 
 static TActionResult Run<TActionResult>(string url, string org = null, string project = null)
@@ -93,29 +112,50 @@ public static IActionResult Run(HttpRequest req, ILogger log, string org = null,
         return new RedirectResult("https://github.com/kzu/azdo#wiki");
     }
 
-    var path = req.Path.Value.Replace($"/{org}/{project}", "/");
-    if (!req.QueryString.HasValue)
-    {
-        // Default mode is to replace dashes with spaces
-        path = path.Replace('-', ' ');
-    } 
-    else if (req.QueryString.Value == "?u")
-    {
-        path = path.Replace('_', ' ');
-    }
-    
-    // Finally, URL-encode the path before making up the final URL
-    var escaped = Uri.EscapeDataString(path).Replace("-", "%252D");
-    var location = $"https://dev.azure.com/{org}/{project}/_wiki/wikis/{project}.wiki?pagePath={escaped}";
+    var path = req.Path.Value.Replace($"/{org}/{project}/", "/");
 
-    new TelemetryClient(TelemetryConfiguration.Active).TrackEvent(
-        "redirect", new Dictionary<string, string>
+    // Detect new URL format for new Wiki ([project].wiki/[id]/[page])
+    var parts = path.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+    if (double.TryParse(parts[0], out var pageId))
+    {
+        var location = $"https://dev.azure.com/{org}/{project}/_wiki/wikis/{project}.wiki{path}";
+
+        new TelemetryClient(TelemetryConfiguration.Active).TrackEvent(
+            "redirect", new Dictionary<string, string>
+            {
+            { "url", req.Host + req.Path },
+            { "redirect", location },
+            { "org", org },
+            { "project", project },
+            });
+
+        return new RedirectResult(location);
+    }
+    else
+    {
+        if (!req.QueryString.HasValue)
         {
+            // Default mode is to replace dashes with spaces
+            path = path.Replace('-', ' ');
+        }
+        else if (req.QueryString.Value == "?u")
+        {
+            path = path.Replace('_', ' ');
+        }
+
+        // Finally, URL-encode the path before making up the final URL
+        var escaped = Uri.EscapeDataString(path).Replace("-", "%252D");
+        var location = $"https://dev.azure.com/{org}/{project}/_wiki/wikis/{project}.wiki?pagePath={escaped}";
+
+        new TelemetryClient(TelemetryConfiguration.Active).TrackEvent(
+            "redirect", new Dictionary<string, string>
+            {
             { "url", req.Host + req.Path + req.QueryString },
             { "redirect", location },
             { "org", org },
             { "project", project },
-        });
+            });
 
-    return new RedirectResult(location);
+        return new RedirectResult(location);
+    }
 }
