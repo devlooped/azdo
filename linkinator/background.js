@@ -23,10 +23,14 @@ function onClicked(tab) {
   copy(newUrl);
 
   // Additional probing for currently selected item in specific views that have lists 
-  // of work items.
-  findSelectedUrl("document.querySelector('.work-items-tab-content .is-selected [data-automation-key=\"System.Title\"] .work-item-title-link').href");
-  findSelectedUrl("document.querySelector('.grid-row-selected.grid-row-current .work-item-title-link').href");
-  findSelectedUrl("document.querySelector('.work-item-form-container .workitem-info-bar a').href");
+  // of work items. We OR them so we stop when the first one is found
+  if (
+    findSelectedUrl("document.querySelector('.work-items-tab-content .is-selected [data-automation-key=\"System.Title\"] .work-item-title-link').href") ||
+    findSelectedUrl("document.querySelector('.grid-row-selected.grid-row-current .work-item-title-link').href") ||
+    findSelectedUrl("document.querySelector('.work-item-form-container .workitem-info-bar a').href") ||
+    findSelectedUrl("document.querySelector('.work-item-form .workitem-info-bar a').href")) {
+    return;
+  }
 }
 
 function findSelectedUrl(querySelector) {
@@ -41,18 +45,18 @@ function findSelectedUrl(querySelector) {
         var shortUrl = parser.pathname.substring(1) + parser.search;
         console.info('Processing ' + shortUrl);
         shortUrl = shortenUrl(parser.hostname, shortUrl);
-        copy(shortUrl);  
+        copy(shortUrl);
+        return true;
       }
     }
-  });  
+  });
 }
 
 function shortenUrl(hostname, relativeUrl) {
   var segments = relativeUrl.split('/');
   var org = segments[0];
   var project = segments[1];
-  if (hostname == 'devdiv.visualstudio.com')
-  {
+  if (hostname == 'devdiv.visualstudio.com') {
     // When using subdomains in visualstudio.com, the subdomain is the 
     // actual organization in dev.azure.com/{org}, and the first path 
     // segment is actually the project.
@@ -70,7 +74,7 @@ function shortenUrl(hostname, relativeUrl) {
       // New short format does not encode the page path but rather uses the page id + its name
       if (org.toLowerCase() == "devdiv" && project.toLowerCase() == "devdiv")
         return domain + match[1] + '/' + match[2];
-      else 
+      else
         return domain + org + '/' + project + '/' + match[1] + '/' + match[2];
     }
   }
@@ -83,7 +87,7 @@ function shortenUrl(hostname, relativeUrl) {
     var id = /workitem=(\d+)/.exec(relativeUrl);
     return 'http://work.azdo.io/' + id[1];
   }
-    
+
   // ================== Build ======================
   if (relativeUrl.includes('/_build')) {
     var buildId = /buildId=(\d+)/.exec(relativeUrl);
@@ -93,7 +97,7 @@ function shortenUrl(hostname, relativeUrl) {
     var suffix = '';
     if (org.toLowerCase() == "devdiv" && project.toLowerCase() == "devdiv")
       return 'https://build.azdo.io/' + id;
-    
+
     if (org.toLowerCase() != "devdiv") {
       // Match build-azdo function ranges to consider IDs BD or builds.
       if (definitionId && id >= 200)
@@ -119,8 +123,8 @@ function shortenUrl(hostname, relativeUrl) {
   }
 
   // ================== Release ======================
-  if (relativeUrl.includes('/_releaseDefinition?definitionId=') || 
-      (relativeUrl.includes('/_release') && relativeUrl.includes('definitionId='))) {
+  if (relativeUrl.includes('/_releaseDefinition?definitionId=') ||
+    (relativeUrl.includes('/_release') && relativeUrl.includes('definitionId='))) {
     // New release pipeline
     var definitionId = /definitionId=(\d+)/.exec(relativeUrl);
     var id = parseInt(definitionId[1]);
@@ -151,7 +155,7 @@ function shortenUrl(hostname, relativeUrl) {
   // ================== PullRequest ======================
   if (org.toLowerCase() == "devdiv" && project.toLowerCase() == "devdiv" && relativeUrl.includes('/pullrequest/')) {
     var match = /_git\/(.+)\/pullrequest\/(\d+)/.exec(relativeUrl);
-    if (match[1] == 'VS') 
+    if (match[1] == 'VS')
       // Make the default project VS, to make it even shorter
       return 'http://pr.devdiv.io/' + match[2];
     else
@@ -162,24 +166,24 @@ function shortenUrl(hostname, relativeUrl) {
     var problemId = /problem\/(\d+)\//.exec(relativeUrl);
     return 'http://feedback.devdiv.io/' + problemId[1];
   }
-  
+
   return { skipped: true };
 }
 
-chrome.webNavigation.onCommitted.addListener(function(e) {
-  chrome.tabs.query( { active: true, currentWindow: true }, function( tabs ) {
+chrome.webNavigation.onCommitted.addListener(function (e) {
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     var tab = tabs[0];
     var url = tab.url.replace("devdiv.visualstudio.com/", "dev.azure.com/DevDiv/");
-    chrome.tabs.update(tabs[0].id, { url: url } ); 
+    chrome.tabs.update(tabs[0].id, { url: url });
   });
-}, { url: [{ hostSuffix: 'devdiv.visualstudio.com' }]});
+}, { url: [{ hostSuffix: 'devdiv.visualstudio.com' }] });
 
 chrome.pageAction.onClicked.addListener(onClicked);
 
-chrome.commands.onCommand.addListener(function(command) {
+chrome.commands.onCommand.addListener(function (command) {
   if (command == "azdo-shorten-url") {
     // Get the currently selected tab
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
       // Toggle the pinned status
       var current = tabs[0]
       onClicked(current);
@@ -188,9 +192,9 @@ chrome.commands.onCommand.addListener(function(command) {
 });
 
 // When the extension is installed or upgraded ...
-chrome.runtime.onInstalled.addListener(function() {
+chrome.runtime.onInstalled.addListener(function () {
   // Replace all rules ...
-  chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
+  chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {
     // With a new rule ...
     chrome.declarativeContent.onPageChanged.addRules([
       {
@@ -207,7 +211,7 @@ chrome.runtime.onInstalled.addListener(function() {
           })
         ],
         // And shows the extension's page action.
-        actions: [ new chrome.declarativeContent.ShowPageAction() ]
+        actions: [new chrome.declarativeContent.ShowPageAction()]
       }
     ]);
   });
