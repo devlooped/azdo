@@ -81,11 +81,11 @@ function shortenUrl(hostname, relativeUrl) {
 
   // ================== WorkItems ======================
   if (relativeUrl.includes('/_workitems/edit/'))
-    return 'http://work.azdo.io/' + relativeUrl.substring(relativeUrl.indexOf('/_workitems/edit/') + 17);
+    return 'https://work.azdo.io/' + relativeUrl.substring(relativeUrl.indexOf('/_workitems/edit/') + 17);
 
   if (relativeUrl.includes('workitem=')) {
     var id = /workitem=(\d+)/.exec(relativeUrl);
-    return 'http://work.azdo.io/' + id[1];
+    return 'https://work.azdo.io/' + id[1];
   }
 
   // ================== Build ======================
@@ -130,11 +130,11 @@ function shortenUrl(hostname, relativeUrl) {
     var id = parseInt(definitionId[1]);
 
     if (org.toLowerCase() == "devdiv" && project.toLowerCase() == "devdiv") {
-      return 'http://release.azdo.io/' + id;
+      return 'https://release.azdo.io/' + id;
     } else {
       // Match build-azdo function ranges to consider IDs RD or releases.
       // A >=50 ID will not be considered an RD by default, so force it in that case.
-      return 'http://release.azdo.io/' + org + '/' + project + '/' + id + (id >= 50 ? '?d' : '');
+      return 'https://release.azdo.io/' + org + '/' + project + '/' + id + (id >= 50 ? '?d' : '');
     }
   }
 
@@ -144,11 +144,11 @@ function shortenUrl(hostname, relativeUrl) {
     var id = parseInt(releaseId[1]);
 
     if (org.toLowerCase() == "devdiv" && project.toLowerCase() == "devdiv") {
-      return 'http://release.azdo.io/' + id;
+      return 'https://release.azdo.io/' + id;
     } else {
       // Match build-azdo function ranges to consider IDs RD or releases.
       // A <50 ID will not be considered a release by default (an RD instead), so force it in that case.
-      return 'http://release.azdo.io/' + org + '/' + project + '/' + id + (id < 50 ? '?r' : '');
+      return 'https://release.azdo.io/' + org + '/' + project + '/' + id + (id < 50 ? '?r' : '');
     }
   }
 
@@ -157,14 +157,14 @@ function shortenUrl(hostname, relativeUrl) {
     var match = /_git\/(.+)\/pullrequest\/(\d+)/.exec(relativeUrl);
     if (match[1] == 'VS')
       // Make the default project VS, to make it even shorter
-      return 'http://pr.devdiv.io/' + match[2];
+      return 'https://pr.devdiv.io/' + match[2];
     else
-      return 'http://pr.devdiv.io/' + match[1] + '/' + match[2];
+      return 'https://pr.devdiv.io/' + match[1] + '/' + match[2];
   }
 
   if (relativeUrl.includes('content/problem/')) {
     var problemId = /problem\/(\d+)\//.exec(relativeUrl);
-    return 'http://feedback.devdiv.io/' + problemId[1];
+    return 'https://feedback.devdiv.io/' + problemId[1];
   }
 
   return { skipped: true };
