@@ -1,3 +1,5 @@
+![Icon](https://github.com/kzu/azdo/raw/master/linkinator/images/AzDO32.png) Azure DevOps Linkinator
+============
 # Azure DevOps Linkinator
 
 ![redirects](https://img.shields.io/endpoint.svg?url=https://browser.azdo.io/stats/redirect&label=%E2%A5%A4%20redirects&color=brightgreen&logo=Azure-DevOps&logoColor=brightgreen)
