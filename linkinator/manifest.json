@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "AzDO Linkinator",
   "author": "Daniel Cazzulino",
-  "version": "0.5.20",
+  "version": "0.5.21",
   "description": "Give Azure DevOps (a.k.a. AzDO) short, beautiful and memorable URLs with no effort.",
   "icons": {
     "16": "images/AzDO16.png",

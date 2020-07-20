@@ -80,12 +80,20 @@ function shortenUrl(hostname, relativeUrl) {
   }
 
   // ================== WorkItems ======================
-  if (relativeUrl.includes('/_workitems/edit/'))
-    return 'https://work.azdo.io/' + relativeUrl.substring(relativeUrl.indexOf('/_workitems/edit/') + 17);
+  var workItemId = '';
+  if (relativeUrl.includes('/_workitems/edit/')) {
+    workItemId = relativeUrl.substring(relativeUrl.indexOf('/_workitems/edit/') + 17);
+  }
+  else if (relativeUrl.includes('workitem=')) {
+    workItemId = /workitem=(\d+)/.exec(relativeUrl);
+  }
 
-  if (relativeUrl.includes('workitem=')) {
-    var id = /workitem=(\d+)/.exec(relativeUrl);
-    return 'https://work.azdo.io/' + id[1];
+  if (workItemId != '') {
+    if (org.toLowerCase() == "devdiv" && project.toLowerCase() == "devdiv") {
+      return 'https://work.azdo.io/' + workItemId;
+    }
+
+    return 'https://work.azdo.io/' + org + '/' + project + '/' + workItemId;
   }
 
   // ================== Build ======================
