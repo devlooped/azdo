@@ -67,8 +67,8 @@ public static IActionResult Run(HttpRequest req, ILogger log, string path)
     }
 
     var location = def 
-        ? $"https://dev.azure.com/{org}/{project}/_build/index?definitionId={parsed}" 
-        : $"https://dev.azure.com/{org}/{project}/_build/index?buildId={parsed}";
+        ? $"https://dev.azure.com/{org}/{project}/_build?definitionId={parsed}" 
+        : $"https://dev.azure.com/{org}/{project}/_build/results?buildId={parsed}";
 
     new TelemetryClient(TelemetryConfiguration.Active).TrackEvent(
         "redirect", new Dictionary<string, string>
