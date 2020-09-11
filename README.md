@@ -1,4 +1,4 @@
-![Icon](https://github.com/kzu/azdo/raw/master/linkinator/images/AzDO32.png) Azure DevOps Linkinator
+![Icon](https://github.com/kzu/azdo/raw/main/linkinator/images/AzDO32.png) Azure DevOps Linkinator
 ============
 # Azure DevOps Linkinator
 
@@ -25,11 +25,11 @@ The latter is a must since even the most beautiful URIs are annoying to type by 
 
 1. Install the [browser extension](http://browser.azdo.io/) from the Chrome store.
 2. Navigate to a build, release, work item or wiki page in your [AzDO](https://dev.azure.com) project.
-3. Click the AzDO linkinator icon [![icon](https://github.com/kzu/azdo/raw/master/linkinator/images/AzDO16.png)](https://browser.azdo.io) in the browser toolbar.
+3. Click the AzDO linkinator icon [![icon](linkinator/images/AzDO16.png)](https://browser.azdo.io) in the browser toolbar.
 
-![Screenshot](https://raw.githubusercontent.com/kzu/azdo/master/img/SmallPreview.png)
+![Screenshot](img/SmallPreview.png)
 
-4. Paste the URL you got on the clipboard and enjoy!
+1. Paste the URL you got on the clipboard and enjoy!
 
 The following are the supported URL shortening schemes:r
 
