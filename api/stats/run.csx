@@ -22,13 +22,9 @@ public static async Task<IActionResult> Run(HttpRequest req, ILogger log)
     { 
         Content = JsonConvert.SerializeObject(new 
         { 
-            schemaVersion = 1,
-            label = "redirects",
-            message = stats.tables[0].rows[0][0].ToString(),
-            color = "orange"
-            // total = stats.tables[0].rows[0][0],
-            // organizations = stats.tables[0].rows[0][1],
-            // projects = stats.tables[0].rows[0][2],
+            total = stats.tables[0].rows[0][0].ToString(),
+            organizations = stats.tables[0].rows[0][1].ToString(),
+            projects = stats.tables[0].rows[0][2].ToString(),
         }), 
         ContentType = "application/json", 
         StatusCode = 200 

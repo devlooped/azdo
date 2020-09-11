@@ -23,7 +23,7 @@
 <script type="text/javascript">
     setTimeout(refresh);
 
-    let url = "http://azdo.io/stats";
+    let url = "https://api.azdo.io/stats";
 
     async function refresh() {
         let stats = (await (await fetch(url)).json());
