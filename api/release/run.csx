@@ -64,7 +64,7 @@ public static IActionResult Run(HttpRequest req, ILogger log, string org = null,
 
     var location = def
         ? $"https://dev.azure.com/{org}/{project}/_release?definitionId={parsed}"
-        : $"https://dev.azure.com/{org}/{project}/_releaseProgress?releaseId={parsed}&_a=release-pipeline-progress";
+        : $"https://dev.azure.com/{org}/{project}/_releaseProgress?releaseId={parsed}";
 
     new TelemetryClient(TelemetryConfiguration.Active).TrackEvent(
         "redirect", new Dictionary<string, string>
