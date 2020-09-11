@@ -8,7 +8,7 @@
       "methods": [
         "get"
       ],
-      "route": "{org?}/{project?}/{id?}"
+      "route": "release/{org?}/{project?}/{id?}"
     },
     {
       "name": "$return",

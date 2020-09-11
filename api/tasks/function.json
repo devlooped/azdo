@@ -8,7 +8,7 @@
       "methods": [
         "get"
       ],
-      "route": "{org?}/{project?}"
+      "route": "tasks/{org?}/{project?}"
     },
     {
       "name": "$return",
