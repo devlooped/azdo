@@ -8,7 +8,6 @@
 
 [![edge](https://img.shields.io/badge/edge-install-nothing?logo=Microsoft%20Edge&logoColor=9EFB0D&labelColor=blue&color=brightgreen)](https://browser.azdo.io)
 [![chrome](https://img.shields.io/badge/chrome-install-4285F4?logo=Google%20Chrome)](https://browser.azdo.io)
-[![rating](https://img.shields.io/chrome-web-store/rating/copkjnnnmemkbfmolfacgmfiecfjopkk)](https://browser.azdo.io)
 
 ![ctrl+shit+s shortcut](https://img.shields.io/badge/Ctrl+Shift+S-%3E%20clipboard-4285F4) ![or](https://img.shields.io/badge/%7C%7C-%20?labelColor=black&color=black) ![toolbar button](https://img.shields.io/badge/%20-%3E%20clipboard-4285F4?logo=Azure%20DevOps&logoColor=0078D7&labelColor=white)
 
