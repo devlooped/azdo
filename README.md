@@ -2,9 +2,9 @@
 ============
 # Azure DevOps Linkinator
 
-![redirects](https://img.shields.io/endpoint.svg?url=https://browser.azdo.io/stats/redirect&label=%E2%A5%A4%20redirects&color=brightgreen&logo=Azure-DevOps&logoColor=brightgreen)
-![organizations](https://img.shields.io/endpoint.svg?url=https://browser.azdo.io/stats/org&label=organizations&color=blue&logo=Azure-DevOps&logoColor=blue)
-![projects](https://img.shields.io/endpoint.svg?url=https://browser.azdo.io/stats/project&label=projects&color=orange&logo=Azure-DevOps&logoColor=orange)
+![redirects](https://img.shields.io/endpoint.svg?url=https://api.azdo.io/stats/redirect&label=%E2%A5%A4%20redirects&color=brightgreen&logo=Azure-DevOps&logoColor=brightgreen)
+![organizations](https://img.shields.io/endpoint.svg?url=https://api.azdo.io/stats/org&label=organizations&color=blue&logo=Azure-DevOps&logoColor=blue)
+![projects](https://img.shields.io/endpoint.svg?url=https://api.azdo.io/stats/project&label=projects&color=orange&logo=Azure-DevOps&logoColor=orange)
 
 [![edge](https://img.shields.io/badge/edge-install-nothing?logo=Microsoft%20Edge&logoColor=9EFB0D&labelColor=blue&color=brightgreen)](https://browser.azdo.io)
 [![chrome](https://img.shields.io/badge/chrome-install-4285F4?logo=Google%20Chrome)](https://browser.azdo.io)
