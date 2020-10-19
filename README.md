@@ -16,7 +16,7 @@ Give [Azure DevOps](https://dev.azure.com) (a.k.a. AzDO) short, beautiful and me
 Because [URLs are UI](https://www.hanselman.com/blog/URLsAreUI.aspx), this project provides a nicer UI on top of the default URLs provided by [Azure DevOps](https://dev.azure.com). It does so with the following two components:
 
 * A 100% serverless URL redirection powered by [Azure Functions](http://functions.azure.com) 2.0
-* A Google Chrome and [Microsoft Edge Insider](https://www.microsoftedgeinsider.com/) [browser extension](https://browser.azdo.io/) to seamlessly create and copy the URL to the clipboard from the current [AzDO](https://dev.azure.com) page.
+* A Google Chrome and [Microsoft Edge](https://www.microsoft.com/en-us/edge) [browser extension](https://browser.azdo.io/) to seamlessly create and copy the URL to the clipboard from the current [AzDO](https://dev.azure.com) page.
 
 The latter is a must since even the most beautiful URIs are annoying to type by hand :).
 
