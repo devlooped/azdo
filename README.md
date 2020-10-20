@@ -2,6 +2,8 @@
 ============
 # Azure DevOps Linkinator
 
+Usage in last 90 days:
+
 ![redirects](https://img.shields.io/endpoint.svg?url=https://api.azdo.io/stats/redirect&label=%E2%A5%A4%20redirects&color=brightgreen&logo=Azure-DevOps&logoColor=brightgreen)
 ![organizations](https://img.shields.io/endpoint.svg?url=https://api.azdo.io/stats/org&label=organizations&color=blue&logo=Azure-DevOps&logoColor=blue)
 ![projects](https://img.shields.io/endpoint.svg?url=https://api.azdo.io/stats/project&label=projects&color=orange&logo=Azure-DevOps&logoColor=orange)
