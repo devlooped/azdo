@@ -1,0 +1,40 @@
+[file "security.md"]
+	url = https://github.com/devlooped/oss/blob/main/security.md
+	etag = fc8101fd914820db3e6b42d608dc46aefbc60c830ac721ed3917daead3727dbd
+	weak
+[file "support.md"]
+	url = https://github.com/devlooped/oss/blob/main/support.md
+	etag = 2d47e2fc4fdfa3515203d452674566e3df507461f9938f451a06d79deb687d24
+	weak
+[file "license.txt"]
+	url = https://github.com/devlooped/oss/blob/main/license.txt
+	etag = 2c6335b37e4ae05eea7c01f5d0c9d82b49c488f868a8b5ba7bff7c6ff01f3994
+	weak
+[file "code-of-conduct.md"]
+	url = https://github.com/devlooped/oss/blob/main/code-of-conduct.md
+	etag = 4857c01bb695f09bf6912d778951c3065d9dd565e5de3d0827f40432d0e4c613
+	weak
+[file ".editorconfig"]
+	url = https://github.com/devlooped/oss/blob/main/.editorconfig
+	etag = 985aa022503959d35b03c870f07ae604cead7580d260775235ef6665aa9a6cbe
+	weak
+[file ".gitignore"]
+	url = https://github.com/devlooped/oss/blob/main/.gitignore
+	etag = 925782b685859e07040442303b411bebd1c75b4fe4e075f547e067f33f323814
+	weak
+[file "Directory.Build.rsp"]
+	url = https://github.com/devlooped/oss/blob/main/Directory.Build.rsp
+	etag = 6a6c6e1d3895df953abf14c82b0899e3eea75cdcd679f6212dcfea15183d73d6
+	weak
+[file ".github/FUNDING.yml"]
+	url = https://github.com/devlooped/oss/blob/main/.github/FUNDING.yml
+	etag = f4d02805592d1f86c29acc9da3a40e817fb3611d6ff0f6409f547137f38f65df
+	weak
+[file ".github/dependabot.yml"]
+	url = https://github.com/devlooped/oss/blob/main/.github/dependabot.yml
+	etag = 2fc8a0d2b47091b058ae3e1f68333492044b49a684621f4939a0bce5bff869d5
+	weak
+[file ".github/ISSUE_TEMPLATE/bug.md"]
+	url = https://github.com/devlooped/oss/blob/main/.github/ISSUE_TEMPLATE/bug.md
+	etag = 026852ba1f1921f3a043bb5e09cd7a2c3d9a33ec51f48e524dc3a2ab72de3141
+	weak

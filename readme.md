@@ -76,3 +76,13 @@ The ID can be either a specific release ID or a release definition ID. The linki
 | http://release.azdo.io/RELEASE_ID | https://dev.azure.com/[ORG]/[PROJECT]/_releaseProgress?releaseId=[RELEASE_ID]&_a=release-pipeline-progress |
 | http://release.azdo.io/DEFINITION_ID | https://dev.azure.com/[ORG]/[PROJECT]/_apps/hub/ms.vss-releaseManagement-web.hub-explorer?definitionId=[DEFINITION_ID]&_a=releases |
 | http://release.azdo.io/RELEASE_ID | https://dev.azure.com/[ORG]/[PROJECT]/_apps/hub/ms.vss-releaseManagement-web.hub-explorer?definitionId=[DEFINITION_ID]&_a=release-summary&releaseId=[RELEASE_ID]&source=ReleaseExplorer |
+
+
+
+## Sponsors
+
+<h3 style="vertical-align: text-top" id="by-clarius">
+<img src="https://raw.githubusercontent.com/devlooped/oss/main/assets/images/sponsors.svg" alt="sponsors" height="36" width="36" style="vertical-align: text-top; border: 0px; padding: 0px; margin: 0px">&nbsp;&nbsp;by&nbsp;<a href="https://github.com/clarius">@clarius</a>&nbsp;<img src="https://raw.githubusercontent.com/clarius/branding/main/logo/logo.svg" alt="sponsors" height="36" width="36" style="vertical-align: text-top; border: 0px; padding: 0px; margin: 0px">
+</h3>
+
+*[get mentioned here too](https://github.com/sponsors/devlooped)!*
