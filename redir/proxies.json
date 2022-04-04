@@ -1,12 +1,12 @@
 {
     "$schema": "http://json.schemastore.org/proxies",
     "proxies": {
-        "buildproxy": {
+        "proxy": {
             "matchCondition": {
                 "route": "{*path}",
                 "methods": [ "GET", "HEAD" ]
             },
-            "backendUri": "https://%WEBSITE_HOSTNAME%/redir/{path}"
+            "backendUri": "https://localhost/redir/{path}"
         }
     }
 }
