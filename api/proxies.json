@@ -3,26 +3,12 @@
     "proxies": {
         "b": {
             "matchCondition": {
-                "route": "/b",
-                "methods": [ "GET", "HEAD" ]
-            },
-            "backendUri": "https://localhost/build"
-        },
-        "bpath": {
-            "matchCondition": {
                 "route": "/b/{*path}",
                 "methods": [ "GET", "HEAD" ]
             },
             "backendUri": "https://localhost/build/{path}"
         },
         "r": {
-            "matchCondition": {
-                "route": "/r",
-                "methods": [ "GET", "HEAD" ]
-            },
-            "backendUri": "https://localhost/release"
-        },
-        "rpath": {
             "matchCondition": {
                 "route": "/r/{*path}",
                 "methods": [ "GET", "HEAD" ]
@@ -31,13 +17,6 @@
         },
         "w": {
             "matchCondition": {
-                "route": "/w",
-                "methods": [ "GET", "HEAD" ]
-            },
-            "backendUri": "https://localhost/wiki"
-        },
-        "wpath": {
-            "matchCondition": {
                 "route": "/w/{*path}",
                 "methods": [ "GET", "HEAD" ]
             },
@@ -45,26 +24,12 @@
         },
         "i": {
             "matchCondition": {
-                "route": "/i",
-                "methods": [ "GET", "HEAD" ]
-            },
-            "backendUri": "https://localhost/work"
-        },
-        "ipath": {
-            "matchCondition": {
                 "route": "/i/{*path}",
                 "methods": [ "GET", "HEAD" ]
             },
             "backendUri": "https://localhost/work/{path}"
         },
         "t": {
-            "matchCondition": {
-                "route": "/t",
-                "methods": [ "GET", "HEAD" ]
-            },
-            "backendUri": "https://localhost/tasks"
-        },
-        "tpath": {
             "matchCondition": {
                 "route": "/t/{*path}",
                 "methods": [ "GET", "HEAD" ]
