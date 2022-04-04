@@ -6,35 +6,35 @@
                 "route": "/b/{*path}",
                 "methods": [ "GET", "HEAD" ]
             },
-            "backendUri": "https://localhost/build/{path}"
+            "backendUri": "https://azdo-api.azurewebsites.net/build/{path}"
         },
         "r": {
             "matchCondition": {
                 "route": "/r/{*path}",
                 "methods": [ "GET", "HEAD" ]
             },
-            "backendUri": "https://localhost/release/{path}"
+            "backendUri": "https://azdo-api.azurewebsites.net/release/{path}"
         },
         "w": {
             "matchCondition": {
                 "route": "/w/{*path}",
                 "methods": [ "GET", "HEAD" ]
             },
-            "backendUri": "https://localhost/wiki/{path}"
+            "backendUri": "https://azdo-api.azurewebsites.net/wiki/{path}"
         },
         "i": {
             "matchCondition": {
                 "route": "/i/{*path}",
                 "methods": [ "GET", "HEAD" ]
             },
-            "backendUri": "https://localhost/work/{path}"
+            "backendUri": "https://azdo-api.azurewebsites.net/work/{path}"
         },
         "t": {
             "matchCondition": {
                 "route": "/t/{*path}",
                 "methods": [ "GET", "HEAD" ]
             },
-            "backendUri": "https://localhost/tasks/{path}"
+            "backendUri": "https://azdo-api.azurewebsites.net/tasks/{path}"
         }
     }
 }
