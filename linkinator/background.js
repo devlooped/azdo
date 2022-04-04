@@ -34,7 +34,7 @@ function onClicked(tab) {
 }
 
 function findSelectedUrl(querySelector) {
-  chrome.tabs.executeScript({
+  chrome.scripting.executeScript({
     "code": querySelector
   }, function (result) {
     href = result[0];
@@ -186,7 +186,7 @@ chrome.webNavigation.onCommitted.addListener(function (e) {
   });
 }, { url: [{ hostSuffix: 'devdiv.visualstudio.com' }] });
 
-chrome.pageAction.onClicked.addListener(onClicked);
+chrome.action.onClicked.addListener(onClicked);
 
 chrome.commands.onCommand.addListener(function (command) {
   if (command == "azdo-shorten-url") {
