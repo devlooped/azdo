@@ -32,7 +32,7 @@ The latter is a must since even the most beautiful URIs are annoying to type by 
 
 1. Paste the URL you got on the clipboard and enjoy!
 
-The following are the supported URL shortening schemes:r
+The following are the supported URL shortening schemes:
 
 > NOTE: in all cases, if `org` == `project`, the latter will be omitted in the copied URL to make it even shorter.
 
@@ -44,7 +44,7 @@ The ID can be either a specific ID or a build definition ID (a.k.a. pipeline ID)
 
 ## Releases
 
-`http://releases.azdo.io/{org}/{project}/{id}`
+`http://release.azdo.io/{org}/{project}/{id}`
 
 The ID can be either a specific release ID or a release definition ID. The linkinator will automatically redirect to the right thing.
 
