@@ -1,4 +1,8 @@
 {
   "version": "2.0",
-  "extensions": { "http": { "routePrefix": "" } }
+  "extensions": {
+    "http": {
+      "routePrefix": ""
+    }
+  }
 }

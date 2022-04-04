@@ -68,7 +68,7 @@ function shortenUrl(hostname, relativeUrl) {
   if (relativeUrl.includes('/_wiki/wikis/')) {
     // Special case DevDiv: we make it even shorter, and switch domains to 
     // place /DevDiv/DevDiv back server-side
-    var domain = relativeUrl.includes('DevDiv/_wiki/wikis/') ? 'http://wiki.devdiv.io/' : 'http://wiki.azdo.io/';
+    var domain = relativeUrl.includes('DevDiv/_wiki/wikis/') ? 'http://wiki.devdiv.io/' : 'https://w.azdo.io/';
     var match = /_wiki\/wikis\/.*\.wiki\/(\d+)\/(.*)/.exec(relativeUrl);
     if (match) {
       // New short format does not encode the page path but rather uses the page id + its name
@@ -90,10 +90,10 @@ function shortenUrl(hostname, relativeUrl) {
 
   if (workItemId != '') {
     if (org.toLowerCase() == "devdiv" && project.toLowerCase() == "devdiv") {
-      return 'https://work.azdo.io/' + workItemId;
+      return 'https://i.azdo.io/' + workItemId;
     }
 
-    return 'https://work.azdo.io/' + org + '/' + project + '/' + workItemId;
+    return 'https://i.azdo.io/' + org + '/' + project + '/' + workItemId;
   }
 
   // ================== Build ======================
@@ -104,7 +104,7 @@ function shortenUrl(hostname, relativeUrl) {
     var id = buildId ? parseInt(buildId[1]) : parseInt(definitionId[1]);
     var suffix = '';
     if (org.toLowerCase() == "devdiv" && project.toLowerCase() == "devdiv")
-      return 'https://build.azdo.io/' + id;
+      return 'https://b.azdo.io/' + id;
 
     if (org.toLowerCase() != "devdiv") {
       // Match build-azdo function ranges to consider IDs BD or builds.
@@ -114,7 +114,7 @@ function shortenUrl(hostname, relativeUrl) {
         suffix = '?b';
     }
 
-    return 'https://build.azdo.io/' + org + '/' + project + '/' + id + suffix;
+    return 'https://b.azdo.io/' + org + '/' + project + '/' + id + suffix;
   }
 
   if (relativeUrl.includes('edit-build-definition&id=')) {
@@ -122,11 +122,11 @@ function shortenUrl(hostname, relativeUrl) {
     var id = parseInt(buildId[1]);
 
     if (org.toLowerCase() == "devdiv" && project.toLowerCase() == "devdiv") {
-      return 'https://build.azdo.io/' + id;
+      return 'https://b.azdo.io/' + id;
     } else {
       // Match build-azdo function ranges to consider IDs BD or builds.
       // A >=200 ID will not be considered a BD by default, so force it in that case.
-      return 'https://build.azdo.io/' + org + '/' + project + '/' + id + (id >= 200 ? '?d' : '');
+      return 'https://b.azdo.io/' + org + '/' + project + '/' + id + (id >= 200 ? '?d' : '');
     }
   }
 
@@ -138,11 +138,11 @@ function shortenUrl(hostname, relativeUrl) {
     var id = parseInt(definitionId[1]);
 
     if (org.toLowerCase() == "devdiv" && project.toLowerCase() == "devdiv") {
-      return 'https://release.azdo.io/' + id;
+      return 'https://r.azdo.io/' + id;
     } else {
       // Match build-azdo function ranges to consider IDs RD or releases.
       // A >=50 ID will not be considered an RD by default, so force it in that case.
-      return 'https://release.azdo.io/' + org + '/' + project + '/' + id + (id >= 50 ? '?d' : '');
+      return 'https://r.azdo.io/' + org + '/' + project + '/' + id + (id >= 50 ? '?d' : '');
     }
   }
 
@@ -152,11 +152,11 @@ function shortenUrl(hostname, relativeUrl) {
     var id = parseInt(releaseId[1]);
 
     if (org.toLowerCase() == "devdiv" && project.toLowerCase() == "devdiv") {
-      return 'https://release.azdo.io/' + id;
+      return 'https://r.azdo.io/' + id;
     } else {
       // Match build-azdo function ranges to consider IDs RD or releases.
       // A <50 ID will not be considered a release by default (an RD instead), so force it in that case.
-      return 'https://release.azdo.io/' + org + '/' + project + '/' + id + (id < 50 ? '?r' : '');
+      return 'https://r.azdo.io/' + org + '/' + project + '/' + id + (id < 50 ? '?r' : '');
     }
   }
 
