@@ -13,6 +13,19 @@ Usage in last 30 days:
 
 ![ctrl+shit+s shortcut](https://img.shields.io/badge/Ctrl+Shift+S-%3E%20clipboard-4285F4) ![or](https://img.shields.io/badge/%7C%7C-%20?labelColor=black&color=black) ![toolbar button](https://img.shields.io/badge/%20-%3E%20clipboard-4285F4?logo=Azure%20DevOps&logoColor=0078D7&labelColor=white)
 
+# ANNOUNCEMENT
+
+Despite being useful to some people, I haven't received a SINGLE sponsorship for this service. As such, 
+I will no longer pay from my own pocket for a rather expensive domain name and accompanying Azure service.
+
+Being OSS, of course you can host this on your own domain and Azure resources and enjoy nice URLs for your 
+own projects. It was fun creating it (especially learning how to do the dynamic badges driven by AppInsights 
+logs :)).
+
+Farewell!
+
+===========
+
 Give [Azure DevOps](https://dev.azure.com) (a.k.a. AzDO) short, beautiful and memorable URLs with no effort.
 
 Because [URLs are UI](https://www.hanselman.com/blog/URLsAreUI.aspx), this project provides a nicer UI on top of the default URLs provided by [Azure DevOps](https://dev.azure.com). It does so with the following two components:
